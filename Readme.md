@@ -13,7 +13,7 @@ Tema de shell para zsh y alias para comandos que no se encuentran en la lista de
         pacman -S arduino-cli
         mkdir trash
         cd trash
-        curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh
+        curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
         mv bin/arduino-cli /usr/bin/arduino-cli
         cd ..
         rm -rf trash
