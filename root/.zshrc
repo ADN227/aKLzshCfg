@@ -6,8 +6,8 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-alias Apacheon="systemctl start httpd.service"
-alias Apacheoff="systemctl stop httpd.service"
+alias Apacheon="sudo systemctl start httpd.service"
+alias Apacheoff="sudo systemctl stop httpd.service"
 alias arduino="arduino-cli"
 alias arduino-update="mkdir trash ; cd trash ; curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh ; mv bin/arduino-cli /usr/bin/arduino-cli ; cd .. ; rm -rf trash"
 alias clean="clear ; nf"
@@ -19,11 +19,13 @@ alias Df="df -h | grep S. ; df -h | grep /dev/sd"
 alias disk="lsblk"
 alias edit="nvim"
 alias editGRUB="nvim /etc/default/grub"
+alias ESP8266="nodemcu-tool"
 alias files="ranger"
 alias Info="paru -Qi"
-alias Install="paru -S --noconfirm"
+alias Install="paru -S --noconfirm" 
 alias Installed="paru -Q | grep"
 alias logout="pkill -u root"
+alias ll="exa -l"
 alias new="touch"
 alias neofetch="neofetch --ascii ~/Documentos/arch"
 alias nf="neofetch --ascii ~/Documentos/arch | lolcat"
@@ -51,5 +53,6 @@ then
 	clear ; neofetch
 elif [ $(pgrep alacritty | wc -l) -le 1 ];
 then
-	nf
+	neofetch
 fi
+
