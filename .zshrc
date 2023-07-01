@@ -12,16 +12,46 @@ source $ZSH/oh-my-zsh.sh
 # Arduino aliases
 alias arduino="sudo arduino-cli"
 alias Arduino="clear ; sudo-arduino"
-
-alias icompile="arduino compile --fqbn"
-alias iupdate="arduino upload --fbqn"
-alias iport="sudo screen"
-
-alias iesp8266="esp8266:esp8266:nodemcuv2"
-alias iesp32="esp32:esp32:esp32"
-alias iesp32cam="esp32:esp32:esp32cam"
-alias imega="arduino:avr:mega"
-alias iuno="arduino:avr:uno"
+alias serial-port="sudo screen"
+ino-compile() {
+	board=$1
+	sketch=$2
+	if [[ $board == "" || $sketch == "" ]]; then
+		echo "Error: es necesario especificar la placa y el sketch"
+	elif [[ $board == "esp8266" ]]; then
+		arduino compile --fqbn esp8266:esp8266:nodemcuv2 -p $sketch
+	elif [[ $board == "esp32" ]]; then
+		arduino compile --fqbn esp32:esp32:esp32 $sketch
+	elif [[ $board == "esp32cam" ]]; then
+		arduino compile --fqbn esp32:esp32:esp32cam $sketch
+	elif [[ $board == "mega" ]]; then
+		arduino compile --fqbn arduino:avr:mega $sketch
+	elif [[ $board == "uno" ]]; then
+		arduino compile --fqbn arduino:avr:uno $sketch
+	else
+		echo "Error: placa no registrada"
+	fi
+}
+ino-update() {
+	bord=$1
+	port=$2
+	sketch=$3
+	if [[ $board == "" || $port == "" || $sketch == "" ]]; then
+		echo "Error: es necesario especificar la placa, el puerto y el sketch"
+	elif [[ $board == "esp8266" ]]; then
+		arduino upload --fqbn esp8266:esp8266:nodemcuv2 -p $port $sketch
+	elif [[ $board == "esp32" ]]; then
+		arduino upload --fqbn esp32:esp32:esp32 -p $port $sketch
+	elif [[ $board == "esp32cam" ]]; then
+		arduino upload --fqbn esp32:esp32:esp32cam -p $port $sketch
+	elif [[ $board == "mega" ]]; then
+		arduino upload --fqbn arduino:avr:mega -p $port $sketch
+	elif [[ $board == "uno" ]]; then
+		arduino upload --fqbn arduino:avr:uno -p $port $sketch
+	else
+		echo "Error: placa no registrada"
+	fi
+}
 
 # scripts
 alias ardillas="python ~/Documentos/Betas/python/ino.py"
@@ -29,15 +59,29 @@ alias bspwm="startx"
 alias desktop="kioclient exec "
 
 # app installer
-alias All="paru -Q"
-alias Info="paru -Qi"
-alias Install="paru -S --noconfirm"
-alias Installed="paru -Q | grep"
-alias Search="yay -s"
-alias Uninstall="paru -R"
-alias Update="paru -Syyu"
-alias Purge="sudo paru -Scc"
-
+archi() {
+	option=$1
+	pack=$2
+	if [[ $option == "" ]]; then
+		neofetch
+	elif [[ $option == "info" && pack != "" ]]; then
+		pacman -Qi $pack
+	elif [[ $option == "install" && pack != "" ]]; then
+		paru -S --noconfirm $pack
+	elif [[ $option == "installed" && pack != "" ]]; then
+		pacman -Q | grep $pack
+	elif [[ $option == "search" && pack != "" ]]; then
+		yay -s $pack
+	elif [[ $option == "uninstall" && pack != "" ]]; then
+		paru -R $pack
+	elif [[ $option == "update" ]]; then
+		paru -Syyu
+	elif [[ $option == "purge" ]]; then
+		sudo paru -Scc
+	else
+		echo "Error: opción no registrada"
+	fi
+}
 alias Npm="sudo npm"
 
 # apps
