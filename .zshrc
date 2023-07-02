@@ -59,29 +59,14 @@ alias bspwm="startx"
 alias desktop="kioclient exec "
 
 # app installer
-archi() {
-	option=$1
-	pack=$2
-	if [[ $option == "" ]]; then
-		neofetch
-	elif [[ $option == "info" && pack != "" ]]; then
-		pacman -Qi $pack
-	elif [[ $option == "install" && pack != "" ]]; then
-		paru -S --noconfirm $pack
-	elif [[ $option == "installed" && pack != "" ]]; then
-		pacman -Q | grep $pack
-	elif [[ $option == "search" && pack != "" ]]; then
-		yay -s $pack
-	elif [[ $option == "uninstall" && pack != "" ]]; then
-		paru -R $pack
-	elif [[ $option == "update" ]]; then
-		paru -Syyu
-	elif [[ $option == "purge" ]]; then
-		sudo paru -Scc
-	else
-		echo "Error: opción no registrada"
-	fi
-}
+alias All="paru -Q"
+alias Info="paru -Qi"
+alias Install="paru -S --noconfirm"
+alias Installed="paru -Q | grep"
+alias Search="yay -s"
+alias Uninstall="paru -R"
+alias Update="paru -Syyu"
+alias Purge="sudo paru -Scc"
 alias Npm="sudo npm"
 
 # apps
