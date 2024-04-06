@@ -13,6 +13,29 @@ source $ZSH/oh-my-zsh.sh
 alias arduino="sudo arduino-cli"
 alias Arduino="clear ; sudo arduino-cli"
 alias serial-port="sudo screen"
+
+ino-lib() {
+	type=$1
+	name=$2
+	if [[ $type == "" || $name == "" ]]; then
+		echo "Error: es necesario especificar la acción y el nombre de la librería"
+	elif [[ $type == "search" ]]; then
+		arduino lib search $name
+	elif [[ $type == "uninstall" ]]; then
+		arduino lib uninstall $name
+	elif [[ $type == "update" ]]; then
+		arduino lib update-index
+	elif [[ $type == "install" ]]; then
+		arduino lib install $name
+	elif [[ $type == "installed" ]]; then
+		arduino lib list
+	elif [[ $type == "git" ]]; then
+		arduino lib install --git-url $name
+	else
+		echo "Error: tipo no registrado"
+	fi
+}
+
 ino-compile() {
 	board=$1
 	sketch=$2
